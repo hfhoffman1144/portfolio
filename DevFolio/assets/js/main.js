@@ -4,19 +4,23 @@ document.addEventListener("DOMContentLoaded", function() {
     const timeDiff = currentDate - targetDate;
     const yearsDiff = Math.round(Math.floor(timeDiff / (1000 * 3600 * 24)) / 365);
 
-    const text1 = `For over ${yearsDiff} years, I've worked on multiple data engineering, data science, 
+    const text1 = `Over the last ${yearsDiff} years, I've worked on multiple data engineering, data science, 
     and machine learning problems in healthcare, financial technology, education technology, HR services, and energy.`;
 
     document.getElementById("intro-paragraph-1").textContent = text1;
 
-    const text2 = `My roles have ranged from independent consultant to senior engineer. I've worked with companies
-    as small as a 25 person startup and companies with thousands of employees. I've contributed
-    to projects that generate millions in revenue, and I've had my fair share of failures.`;
+    const text2 = `My roles have ranged from independent consultant to senior engineer at
+     companies as small as a 25-person startup and large, well-established enterprises.
+      I've contributed to customer-facing projects that generate millions in annual revenue,
+       internal systems that save millions in monthly costs, and a fair share of failures.`;
 
     document.getElementById("intro-paragraph-2").textContent = text2;
 
-    const text3 = `I believe the best way to solve data and machine learning problems is to start simply and layer on
-    complexity as needed. I'm not motivated by hype`
+    const text3 = `My philosophy towards data and machine learning problems is to start
+     simple and layer on complexity as needed. I recognize the importance of robust data
+      infrastructure as the foundation for any data project, prioritize delivering value
+       over getting caught up in the hype, and strive to communicate clearly with technical
+        and non-technical stakeholders.`
 
     document.getElementById("intro-paragraph-3").textContent = text3;
 
