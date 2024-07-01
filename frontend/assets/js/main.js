@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
+
     const targetDate = new Date('2019-01-01');
     const currentDate = new Date();
     const timeDiff = currentDate - targetDate;

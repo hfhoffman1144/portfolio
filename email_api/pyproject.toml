@@ -1,0 +1,8 @@
+[project]
+name = "email_api"
+version = "0.1"
+dependencies = [
+    "fastapi==0.111.0",
+    "pydantic==2.7.4",
+    "pydantic-settings==2.3.4"
+]
