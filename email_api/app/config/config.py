@@ -4,4 +4,5 @@ from pydantic_settings import BaseSettings
 
 class EmailSettings(BaseSettings):
     GMAIL_ADDRESS: EmailStr
+    FINAL_ADDRESS: EmailStr
     GMAIL_APP_PASSWORD: str

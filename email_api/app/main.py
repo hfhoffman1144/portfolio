@@ -17,16 +17,25 @@ async def get_status():
     return {"status": "running"}
 
 
-@app.post("/send-email")
+@app.post("/send-email-to-self")
 def send_emails(email_message: EmailMessage) -> JSONResponse:
     """Endpoint to send an email"""
 
+    inquiry_message = f"""\
+    You received a message from {email_message.receiver_email} 
+    on your portfolio page. Here's the message:
+
+    Subject: {email_message.subject}
+
+    Body: {email_message.body}
+    """
+
     success = send_email(
-        receiver_email=email_message.receiver_email,
+        receiver_email=CONFIG.FINAL_ADDRESS,
         sender_email=CONFIG.GMAIL_ADDRESS,
         password=CONFIG.GMAIL_APP_PASSWORD,
-        subject=email_message.subject,
-        body=email_message.body,
+        subject="Portfolio Inquiry",
+        body=inquiry_message,
     )
 
     if success:
