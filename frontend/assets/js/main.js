@@ -38,14 +38,13 @@ document.querySelector('.php-email-form').addEventListener('submit', function(ev
     document.querySelector('.error-message').style.display = 'none';
     document.querySelector('.sent-message').style.display = 'none';
 
-    const name = document.querySelector('#name').value;
     const email = document.querySelector('#email').value;
     const subject = document.querySelector('#subject').value;
     const message = document.querySelector('[name="message"]').value;
 
     const data = {
         receiver_email: email,
-        subject: name + " " + subject,
+        subject: subject,
         body: message
     };
 
@@ -56,21 +55,22 @@ document.querySelector('.php-email-form').addEventListener('submit', function(ev
             headers: {
                 'Content-Type': 'application/json'
             },
-            mode: 'no-cors',
             body: JSON.stringify(data)
         })
         .then(response => {
             console.log('Response status:', response.status); // Log the response status
-            return response.json();
-        })
-        .then(data => {
-            console.log('Response data:', data); // Log the response data
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
             document.querySelector('.loading').style.display = 'none';
-            if (data.success) {
+            if (response.status == 200) {
                 document.querySelector('.sent-message').style.display = 'block';
+                document.querySelector('.error-message').style.display = 'none';
             } else {
                 document.querySelector('.error-message').style.display = 'block';
                 document.querySelector('.error-message').textContent = data.error || 'An error occurred. Please try again later.';
+                document.querySelector('.sent-message').style.display = 'none';
             }
         })
         .catch(error => {
@@ -78,8 +78,10 @@ document.querySelector('.php-email-form').addEventListener('submit', function(ev
             document.querySelector('.loading').style.display = 'none';
             document.querySelector('.error-message').style.display = 'block';
             document.querySelector('.error-message').textContent = 'An error occurred. Please try again later.';
+            document.querySelector('.sent-message').style.display = 'none';
         });
 });
+
 
 (function() {
     "use strict";
