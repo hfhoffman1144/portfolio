@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from config.config import EmailSettings
 from models.email_message import EmailMessage
 from utils.send_email import send_email
@@ -9,6 +10,14 @@ CONFIG = EmailSettings()
 app = FastAPI(
     title="Harrison Hoffman Contact Me",
     description="An API to send emails to me from my portfolio site",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
 )
 
 

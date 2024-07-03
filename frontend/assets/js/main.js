@@ -30,6 +30,56 @@ document.addEventListener("DOMContentLoaded", function() {
     counterElement2.setAttribute('data-purecounter-end', yearsDiff);
 });
 
+document.querySelector('.php-email-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Show loading message
+    document.querySelector('.loading').style.display = 'block';
+    document.querySelector('.error-message').style.display = 'none';
+    document.querySelector('.sent-message').style.display = 'none';
+
+    const name = document.querySelector('#name').value;
+    const email = document.querySelector('#email').value;
+    const subject = document.querySelector('#subject').value;
+    const message = document.querySelector('[name="message"]').value;
+
+    const data = {
+        receiver_email: email,
+        subject: name + " " + subject,
+        body: message
+    };
+
+    console.log('Sending data:', data); // Log the data being sent
+
+    fetch('https://portfolio-email-api-3i8k.onrender.com/send-email-to-self', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            mode: 'no-cors',
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            console.log('Response status:', response.status); // Log the response status
+            return response.json();
+        })
+        .then(data => {
+            console.log('Response data:', data); // Log the response data
+            document.querySelector('.loading').style.display = 'none';
+            if (data.success) {
+                document.querySelector('.sent-message').style.display = 'block';
+            } else {
+                document.querySelector('.error-message').style.display = 'block';
+                document.querySelector('.error-message').textContent = data.error || 'An error occurred. Please try again later.';
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error); // Log any fetch errors
+            document.querySelector('.loading').style.display = 'none';
+            document.querySelector('.error-message').style.display = 'block';
+            document.querySelector('.error-message').textContent = 'An error occurred. Please try again later.';
+        });
+});
 
 (function() {
     "use strict";
