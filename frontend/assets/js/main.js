@@ -40,7 +40,8 @@ document.querySelector('.php-email-form').addEventListener('submit', function(ev
 
     const email = document.querySelector('#email').value;
     const subject = document.querySelector('#subject').value;
-    const message = document.querySelector('[name="message"]').value;
+    const name = document.querySelector('#name').value;
+    const message = 'Name: ' + name + ' ' + document.querySelector('[name="message"]').value;
 
     const data = {
         receiver_email: email,
