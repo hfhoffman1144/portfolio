@@ -28,60 +28,61 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const counterElement2 = document.getElementById('yearsExperienceCounter');
     counterElement2.setAttribute('data-purecounter-end', yearsDiff);
-});
 
-document.querySelector('.php-email-form').addEventListener('submit', function(event) {
-    event.preventDefault();
+    document.querySelector('.php-email-form').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-    // Show loading message
-    document.querySelector('.loading').style.display = 'block';
-    document.querySelector('.error-message').style.display = 'none';
-    document.querySelector('.sent-message').style.display = 'none';
+        // Show loading message
+        document.querySelector('.loading').style.display = 'block';
+        document.querySelector('.error-message').style.display = 'none';
+        document.querySelector('.sent-message').style.display = 'none';
 
-    const email = document.querySelector('#email').value;
-    const subject = document.querySelector('#subject').value;
-    const name = document.querySelector('#name').value;
-    const message = 'Name: ' + name + ' ' + document.querySelector('[name="message"]').value;
+        const email = document.querySelector('#email').value;
+        const subject = document.querySelector('#subject').value;
+        const name = document.querySelector('#name').value;
+        const message = 'Name: ' + name + ' ' + document.querySelector('[name="message"]').value;
 
-    const data = {
-        receiver_email: email,
-        subject: subject,
-        body: message
-    };
+        const data = {
+            receiver_email: email,
+            subject: subject,
+            body: message
+        };
 
-    console.log('Sending data:', data); // Log the data being sent
+        console.log('Sending data:', data); // Log the data being sent
 
-    fetch('https://portfolio-email-api-3i8k.onrender.com/send-email-to-self', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            console.log('Response status:', response.status); // Log the response status
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
+        fetch('https://portfolio-email-api-3i8k.onrender.com/send-email-to-self', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                console.log('Response status:', response.status); // Log the response status
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
 
-            document.querySelector('.loading').style.display = 'none';
-            if (response.status == 200) {
-                document.querySelector('.sent-message').style.display = 'block';
-                document.querySelector('.error-message').style.display = 'none';
-            } else {
+                document.querySelector('.loading').style.display = 'none';
+                if (response.status == 200) {
+                    document.querySelector('.sent-message').style.display = 'block';
+                    document.querySelector('.error-message').style.display = 'none';
+                } else {
+                    document.querySelector('.error-message').style.display = 'block';
+                    document.querySelector('.error-message').textContent = data.error || 'An error occurred. Please try again later.';
+                    document.querySelector('.sent-message').style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error); // Log any fetch errors
+                document.querySelector('.loading').style.display = 'none';
                 document.querySelector('.error-message').style.display = 'block';
-                document.querySelector('.error-message').textContent = data.error || 'An error occurred. Please try again later.';
+                document.querySelector('.error-message').textContent = 'An error occurred. Please try again later.';
                 document.querySelector('.sent-message').style.display = 'none';
-            }
-        })
-        .catch(error => {
-            console.error('Fetch error:', error); // Log any fetch errors
-            document.querySelector('.loading').style.display = 'none';
-            document.querySelector('.error-message').style.display = 'block';
-            document.querySelector('.error-message').textContent = 'An error occurred. Please try again later.';
-            document.querySelector('.sent-message').style.display = 'none';
-        });
+            });
+    });
 });
+
 
 
 (function() {
